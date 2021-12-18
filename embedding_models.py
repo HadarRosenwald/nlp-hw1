@@ -6,7 +6,7 @@ from gensim.models import Word2Vec, KeyedVectors, keyedvectors, word2vec
 from datetime import datetime
 
 from utils.utils import GLOVE_PATH
-from utils.embedding import vector_size, window_size, min_count, num_workers, num_epochs
+from utils.embedding import vector_size, window_size, min_count, num_workers, num_epochs, pretrained_weight
 
 
 def get_pretrained_rep_model() -> keyedvectors.KeyedVectors:
@@ -37,7 +37,7 @@ def produce_representation_vector_per_word(word: str, glove: keyedvectors.KeyedV
     else:
         if in_pretrained and in_trained:
             # word exists in both, will use weighted averaged embedding vector
-            vec = 0.8 * glove[word] + 0.2 * representation_model.wv.get_vector(word, norm=True)
+            vec = pretrained_weight * glove[word] + (1-pretrained_weight) * representation_model.wv.get_vector(word, norm=True)
         elif in_pretrained:
             # word exists only in pretrained embedding model
             vec = glove[word]
