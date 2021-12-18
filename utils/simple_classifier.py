@@ -5,6 +5,7 @@ m1_file_path = 'm1.pkl'
 
 # hyperparameters:
 
-C = 10
-class_weight = [1,5]
+C = 1
+# class_weight = {0: 1, 1: 5}
+class_weight = None
 kernel='rbf'
