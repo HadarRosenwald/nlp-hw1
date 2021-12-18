@@ -70,8 +70,9 @@ def main():
 
     for i, m in enumerate([m1, m2, m3]):
         model_name = f'm{i + 1}'
-        print(f"Generating file for model {model_name} (on {datetime.now().time()})\n")
+        print(f"Generating file for model {model_name} (on {datetime.now().time()})")
         generate_files(m, model_name, glove, representation_model)
+        print("Completed.")
 
 
 if __name__ == '__main__':
