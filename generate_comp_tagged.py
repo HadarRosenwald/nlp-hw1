@@ -5,6 +5,7 @@ from gensim.models import KeyedVectors
 from sklearn import svm
 from datetime import datetime
 
+from preprocess.data_preprocess import preprocess
 from utils.utils import files_paths
 from utils.nn_classifier import m2_nn, m2_file_path
 from utils.simple_classifier import m1_file_path
@@ -35,8 +36,7 @@ def generate_files(model_object, comp_file_name, glove, representation_model):
             continue
 
         # Pre process
-        word = line.lower().rstrip()
-        # TODO IF THERE ARE MORE PREPROCESS, IT SHOULD BE DONE HERE ALSO!!!
+        word = preprocess(line)
 
         # Get representation vector
         vec = produce_representation_vector_per_word(word, glove, representation_model)

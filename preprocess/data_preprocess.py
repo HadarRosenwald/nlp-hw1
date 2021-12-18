@@ -1,5 +1,26 @@
 from typing import List, Tuple
 from utils.utils import files_paths
+import re
+
+def preprocess_url(word):
+    is_url = re.search('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', word)
+    if not is_url:
+        return word
+    return 'url_'
+
+
+def find_repeating_letters(word):
+    rep_letters = re.findall(r'((\w)\2{2,})', word)
+    for sequence, single in rep_letters:
+        word = word.replace(sequence, single)
+    return word
+
+
+def preprocess(word):
+    word = word.lower().strip()
+    word = preprocess_url(word)
+    word = find_repeating_letters(word)
+    return word
 
 def read_train_dev_data(train: bool = True) -> Tuple[List[List[str]], List[List[int]]]:
     # Parse train and dev data.
@@ -21,7 +42,7 @@ def read_train_dev_data(train: bool = True) -> Tuple[List[List[str]], List[List[
             sentence_words = list()
             sentence_labels = list()
             continue
-        word = word_label[0].lower()
+        word = preprocess(word_label[0])
         label = word_label[1].rstrip()
         label = 0 if label == 'O' else 1
         sentence_words.append(word)
