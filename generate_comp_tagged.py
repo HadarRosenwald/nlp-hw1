@@ -1,3 +1,4 @@
+import os.path
 from copy import copy
 from gensim.models.keyedvectors import load_word2vec_format
 from gensim.models import KeyedVectors
@@ -24,9 +25,9 @@ def load_models():
     return m1, m2, m3
 
 
-def generate_files(model_object, model_name, glove, representation_model):
+def generate_files(model_object, comp_file_name, glove, representation_model):
     read_f = open(files_paths['test'], "r")
-    write_f = open(f'comp_{model_name}_207108820.tagged', 'w')
+    write_f = open(comp_file_name, 'w')
 
     for line in read_f:
         if line == "\n":  # a sentence ended.
@@ -55,7 +56,6 @@ def generate_files(model_object, model_name, glove, representation_model):
         m_pred = 'O' if m_pred[0] == 0 else 'X'
         write_f.write(f"{line.rstrip()}\t{m_pred}\n")
 
-    print("Finished writing to file")
     read_f.close()
     write_f.close()
 
@@ -70,9 +70,15 @@ def main():
 
     for i, m in enumerate([m1, m2, m3]):
         model_name = f'm{i + 1}'
+        comp_file_name = f'comp_{model_name}_207108820.tagged'
+        if os.path.isfile(comp_file_name):
+            os.remove(comp_file_name)
+
         print(f"Generating file for model {model_name} (on {datetime.now().time()})")
-        generate_files(m, model_name, glove, representation_model)
-        print("Completed.")
+        generate_files(m, comp_file_name, glove, representation_model)
+        print(f"Generated file {comp_file_name} (on {datetime.now().time()})")
+
+    print("Completed.")
 
 
 if __name__ == '__main__':
