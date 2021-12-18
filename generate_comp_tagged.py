@@ -7,7 +7,7 @@ from utils.utils import files_paths
 from utils.nn_classifier import m2_nn, m2_file_path
 from utils.simple_classifier import m1_file_path
 from utils.embedding import embedding_file_path
-from models.embedding_models import produce_representation_vector_per_word,get_pretrained_rep_model
+from embedding_models import produce_representation_vector_per_word, get_pretrained_rep_model
 
 import pickle
 import torch
@@ -66,3 +66,7 @@ def main():
         model_name = f'm{i + 1}'
         print(f"Generating file for model {model_name} (on {datetime.now().time()})\n")
         generate_files(m, model_name)
+
+
+if __name__ == '__main__':
+    main()

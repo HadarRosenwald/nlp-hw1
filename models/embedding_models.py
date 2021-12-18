@@ -1,10 +1,13 @@
 import numpy as np
 
+import os.path
+
 from gensim import downloader
 from gensim.models import Word2Vec, KeyedVectors, keyedvectors, word2vec
 
 from datetime import datetime
 
+from utils.embedding import pretrained_embedding_file_path, embedding_file_path
 from ..utils import utils
 from ..utils import embedding
 
@@ -12,7 +15,11 @@ from ..utils import embedding
 def get_pretrained_rep_model() -> keyedvectors.KeyedVectors:
     # Download and return pretrained model
     print(f"downloading glove (on {datetime.now().time()})")
-    glove = downloader.load(utils.GLOVE_PATH)
+    if os.path.isfile(pretrained_embedding_file_path):
+        glove = KeyedVectors.load(pretrained_embedding_file_path)
+    else:
+        glove = downloader.load(utils.GLOVE_PATH)
+        glove.save(pretrained_embedding_file_path)
     print(f"Finished downloading glove (on {datetime.now().time()})")
     return glove
 
@@ -23,7 +30,7 @@ def train_representation_model(train_data, dev_data, test_data) -> word2vec.Word
     model = Word2Vec(sentences=training_data, vector_size=embedding.vector_size, window=embedding.window_size,
                      min_count=embedding.min_count, workers=embedding.num_workers)
     model.train(training_data, total_examples=len(training_data), epochs=embedding.num_epochs)
-    model.save(embedding.embedding_file_path)
+    model.wv.save_word2vec_format(embedding_file_path, binary=True)
     return model
 
 

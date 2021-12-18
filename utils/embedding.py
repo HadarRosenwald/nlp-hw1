@@ -1,7 +1,8 @@
 
 # This files holds Embedding hyper params
 
-embedding_file_path = 'embedding.kv'
+embedding_file_path = 'embedding.bin'
+pretrained_embedding_file_path = 'pretrained.kv'
 
 vector_size = 200 # Dimensionality of the word vectors.
 window_size = 5 # Maximum distance between the current and predicted word within a sentence.
