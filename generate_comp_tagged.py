@@ -24,7 +24,7 @@ def load_models():
     return m1, m2, m3
 
 
-def generate_files(model_object, model_name):
+def generate_files(model_object, model_name, glove, representation_model):
     read_f = open(files_paths['test'], "r")
     write_f = open(f'comp_{model_name}_207108820.tagged', 'w')
 
@@ -38,8 +38,6 @@ def generate_files(model_object, model_name):
         # TODO IF THERE ARE MORE PREPROCESS, IT SHOULD BE DONE HERE ALSO!!!
 
         # Get representation vector
-        glove = get_pretrained_rep_model()
-        representation_model = KeyedVectors.load(pretrained_embedding_file_path)
         vec = produce_representation_vector_per_word(word, glove, representation_model)
 
         # Run Inference
@@ -57,16 +55,23 @@ def generate_files(model_object, model_name):
         m_pred = 'O' if m_pred[0] == 0 else 'X'
         write_f.write(f"{line.rstrip()}\t{m_pred}\n")
 
+    print("Finished writing to file")
     read_f.close()
     write_f.close()
 
 
 def main():
+    print("### Loading classifiers ###")
     m1, m2, m3 = load_models()
+
+    print("### Loading embedded ###")
+    glove = get_pretrained_rep_model()
+    representation_model = KeyedVectors.load(pretrained_embedding_file_path)
+
     for i, m in enumerate([m1, m2, m3]):
         model_name = f'm{i + 1}'
         print(f"Generating file for model {model_name} (on {datetime.now().time()})\n")
-        generate_files(m, model_name)
+        generate_files(m, model_name, glove, representation_model)
 
 
 if __name__ == '__main__':
