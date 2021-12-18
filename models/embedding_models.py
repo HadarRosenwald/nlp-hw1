@@ -24,9 +24,9 @@ def get_pretrained_rep_model() -> keyedvectors.KeyedVectors:
     return glove
 
 
-def train_representation_model(train_data, dev_data, test_data) -> word2vec.Word2Vec:
+def train_representation_model(train_data) -> word2vec.Word2Vec:
     # train a Word2Vec model from given data
-    training_data = train_data[0] + dev_data[0] + test_data  # TODO are wee keeping dev and test?
+    training_data = train_data[0]
     model = Word2Vec(sentences=training_data, vector_size=embedding.vector_size, window=embedding.window_size,
                      min_count=embedding.min_count, workers=embedding.num_workers)
     model.train(training_data, total_examples=len(training_data), epochs=embedding.num_epochs)

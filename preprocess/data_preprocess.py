@@ -30,28 +30,8 @@ def read_train_dev_data(train: bool = True) -> Tuple[List[List[str]], List[List[
     return sentences_words, sentences_labels
 
 
-def read_test_data() -> List[List[str]]:
-    # Parse test data.
-    # Returns a list of Sentences, each sentence - a list of the words
-    # TODO - if not using it for training the rep model, then this is redundent. remove
-    file = open(files_paths['test'], "r")
-    sentences_words = list()
-    sentence_words = list()
-
-    for line in file:
-        if line == "\n":  # a sentence ended.
-            sentences_words.append(sentence_words)
-            sentence_words = list()
-            continue
-        word = line.lower().rstrip()
-        sentence_words.append(word)
-    file.close()
-    return sentences_words
-
-
 def get_data_from_files():
     # parse data files. See each function to understand structure
     train_data = read_train_dev_data(train=True)
     dev_data = read_train_dev_data(train=False)
-    test_data = read_test_data()
-    return train_data, dev_data, test_data
+    return train_data, dev_data

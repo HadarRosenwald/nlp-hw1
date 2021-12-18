@@ -7,11 +7,11 @@ from utils.nn_classifier import m2_nn
 
 def main():
     # Get data from files
-    train_data, dev_data, test_data = get_data_from_files()
+    train_data, dev_data = get_data_from_files()
 
     # Create embedding models
     glove = get_pretrained_rep_model()
-    representation_model = train_representation_model(train_data, dev_data, test_data)
+    representation_model = train_representation_model(train_data)
 
     # Create classification models
     m1, m1_f1_score = simple_model(train_data, dev_data, glove, representation_model)
