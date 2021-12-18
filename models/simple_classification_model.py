@@ -18,13 +18,13 @@ def train_simple_model(train_data):
     # rep: type: np.ndarray, shape: (46469, 200). 46469 is the # words in training data
     # labels: type: np.ndarray, shape: (46469,).
     print(
-        f"Produced representation for the words in the training data set. {rep.shape[0]} words with vector len {rep.shape[1]}\n")
+        f"Produced representation for the words in the training data set. {rep.shape[0]} words with vector len {rep.shape[1]}")
 
     # Training simple model:
     print(f"Starting model fit on training data (on {datetime.now().time()})")
 
     svm_model = svm.SVC().fit(rep, labels)
-    print(f"Model fitting completed (on {datetime.now().time()})\n")
+    print(f"Model fitting completed (on {datetime.now().time()})")
 
     with open(m1_file_path, 'wb') as f: # TODO SHOULD WE CLOSE?
         pickle.dump(svm_model, f)
