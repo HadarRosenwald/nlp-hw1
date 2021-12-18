@@ -6,9 +6,11 @@ from sklearn.metrics import f1_score
 
 from embedding_models import produce_representation_vectors
 from ..utils.simple_classifier import m1_file_path
+from ..utils.utils import set_seed
 
 
 def train_simple_model(train_data, glove, representation_model):
+    set_seed()
     ### Training ###
 
     # Each word will get a representation vector:
