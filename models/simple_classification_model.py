@@ -5,7 +5,7 @@ from sklearn import svm
 from sklearn.metrics import f1_score
 
 from embedding_models import produce_representation_vectors
-from utils.simple_classifier import m1_file_path
+from ..utils.simple_classifier import m1_file_path
 
 
 def train_simple_model(train_data, glove, representation_model):

@@ -5,8 +5,8 @@ from tqdm import tqdm
 from sklearn.metrics import f1_score
 
 from embedding_models import produce_representation_vectors
-from utils.utils import set_seed
-from utils.nn_classifier import batch_size, dataloader_shuffle, get_m2_optimizer, num_epochs, criterion, m2_file_path
+from ..utils.utils import set_seed
+from ..utils.nn_classifier import batch_size, dataloader_shuffle, get_m2_optimizer, num_epochs, criterion, m2_file_path
 
 
 class TrainDevDataset(Dataset):

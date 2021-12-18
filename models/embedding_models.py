@@ -5,14 +5,14 @@ from gensim.models import Word2Vec, KeyedVectors, keyedvectors, word2vec
 
 from datetime import datetime
 
-from utils.utils import GLOVE_PATH
-from utils.embedding import vector_size, window_size, min_count, num_workers, num_epochs, pretrained_weight
+from ..utils import utils
+from ..utils import embedding
 
 
 def get_pretrained_rep_model() -> keyedvectors.KeyedVectors:
     # Download and return pretrained model
     print(f"downloading glove (on {datetime.now().time()})")
-    glove = downloader.load(GLOVE_PATH)
+    glove = downloader.load(utils.GLOVE_PATH)
     print(f"Finished downloading glove (on {datetime.now().time()})")
     return glove
 
@@ -20,9 +20,9 @@ def get_pretrained_rep_model() -> keyedvectors.KeyedVectors:
 def train_representation_model(train_data, dev_data, test_data) -> word2vec.Word2Vec:
     # train a Word2Vec model from given data
     training_data = train_data[0] + dev_data[0] + test_data  # TODO are wee keeping dev and test?
-    model = Word2Vec(sentences=training_data, vector_size=vector_size, window=window_size, min_count=min_count,
-                     workers=num_workers)
-    model.train(training_data, total_examples=len(training_data), epochs=num_epochs)
+    model = Word2Vec(sentences=training_data, vector_size=embedding.vector_size, window=embedding.window_size,
+                     min_count=embedding.min_count, workers=embedding.num_workers)
+    model.train(training_data, total_examples=len(training_data), epochs=embedding.num_epochs)
     return model
 
 

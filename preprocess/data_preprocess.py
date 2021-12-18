@@ -1,5 +1,5 @@
 from typing import List, Tuple
-from utils.utils import GLOVE_PATH, files_paths
+from ..utils.utils import files_paths
 
 def read_train_dev_data(train: bool = True) -> Tuple[List[List[str]], List[List[int]]]:
     # Parse train and dev data.
