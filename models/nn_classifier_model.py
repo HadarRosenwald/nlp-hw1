@@ -39,6 +39,9 @@ def get_data_set_loader(data):
 
 def train_evaluate_nn_model(m2_nn, train_loader, dev_loader, dev_dataset, train_dataset):
     set_seed()
+
+    print(m2_nn)
+
     optimizer = get_m2_optimizer(m2_nn.parameters())
     best_f1 = 0.0
 
