@@ -4,15 +4,15 @@ from torch.utils.data import Dataset
 from tqdm import tqdm
 from sklearn.metrics import f1_score
 
-from embedding_models import produce_representation_vectors
+from models.embedding_models import produce_representation_vectors
 from utils.utils import set_seed
 from utils.nn_classifier import batch_size, dataloader_shuffle, get_m2_optimizer, num_epochs, criterion, m2_file_path
 
 
 class TrainDevDataset(Dataset):
-    def __init__(self, data, glove, representation_model):
+    def __init__(self, data):
         self.data = data
-        rep, labels = produce_representation_vectors(self.data, glove, representation_model)
+        rep, labels = produce_representation_vectors(self.data)
         self.rep = rep
         self.labels = torch.from_numpy(labels)
     def __len__(self):
@@ -30,8 +30,8 @@ def evaluate(model, dev_loader):
         y_pred_list.append(y_pred)
     return [item for sublist in y_pred_list for item in sublist]
 
-def get_data_set_loader(data, glove, representation_model):
-    dataset = TrainDevDataset(data, glove, representation_model)
+def get_data_set_loader(data):
+    dataset = TrainDevDataset(data)
     loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=dataloader_shuffle)
     return dataset, loader
 
@@ -78,11 +78,11 @@ def train_evaluate_nn_model(m2_nn, train_loader, dev_loader, dev_dataset, train_
     return m2_nn, best_f1
 
 
-def nn_model(train_data, dev_data, glove, representation_model, m2_nn):
+def nn_model(train_data, dev_data, m2_nn):
     set_seed()
 
-    train_dataset, train_loader = get_data_set_loader(train_data, glove, representation_model)
-    dev_dataset, dev_loader = get_data_set_loader(dev_data, glove, representation_model)
+    train_dataset, train_loader = get_data_set_loader(train_data)
+    dev_dataset, dev_loader = get_data_set_loader(dev_data)
 
     m2_nn, best_f1 = train_evaluate_nn_model(m2_nn, train_loader, dev_loader, dev_dataset, train_dataset)
 
