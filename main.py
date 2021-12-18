@@ -1,7 +1,3 @@
-from path import Path
-import sys
-sys.path.append(Path(__file__).parent)
-
 from preprocess.data_preprocess import get_data_from_files
 from models.embedding_models import get_pretrained_rep_model, train_representation_model
 from models.simple_classification_model import simple_model
