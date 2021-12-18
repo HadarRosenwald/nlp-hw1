@@ -8,8 +8,8 @@ from gensim.models import Word2Vec, KeyedVectors, keyedvectors, word2vec
 from datetime import datetime
 
 from utils.embedding import pretrained_embedding_file_path, embedding_file_path
-from ..utils import utils
-from ..utils import embedding
+from utils import utils
+from utils import embedding
 
 
 def get_pretrained_rep_model() -> keyedvectors.KeyedVectors:

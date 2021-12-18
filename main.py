@@ -1,7 +1,11 @@
-from data_preprocess import get_data_from_files
-from embedding_models import get_pretrained_rep_model, train_representation_model
-from simple_classification_model import simple_model
-from nn_classifier_model import nn_model
+from path import Path
+import sys
+sys.path.append(Path(__file__).parent)
+
+from preprocess.data_preprocess import get_data_from_files
+from models.embedding_models import get_pretrained_rep_model, train_representation_model
+from models.simple_classification_model import simple_model
+from models.nn_classifier_model import nn_model
 from utils.nn_classifier import m2_nn
 
 

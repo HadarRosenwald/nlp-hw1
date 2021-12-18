@@ -5,8 +5,8 @@ from tqdm import tqdm
 from sklearn.metrics import f1_score
 
 from embedding_models import produce_representation_vectors
-from ..utils.utils import set_seed
-from ..utils.nn_classifier import batch_size, dataloader_shuffle, get_m2_optimizer, num_epochs, criterion, m2_file_path
+from utils.utils import set_seed
+from utils.nn_classifier import batch_size, dataloader_shuffle, get_m2_optimizer, num_epochs, criterion, m2_file_path
 
 
 class TrainDevDataset(Dataset):
@@ -24,7 +24,7 @@ def evaluate(model, dev_loader):
     y_pred_list = []
     for i, x_y in tqdm(enumerate(dev_loader)):
         x, y = x_y
-        logps = model(x)
+        logps = model(x.float())
         probabilities = torch.exp(logps)
         y_pred = torch.argmax(probabilities, dim=1)
         y_pred_list.append(y_pred)
@@ -46,7 +46,7 @@ def train_evaluate_nn_model(m2_nn, train_loader, dev_loader, dev_dataset, train_
             x, y = x_y
 
             # forward
-            logps = m2_nn(x)
+            logps = m2_nn(x.float())
             loss = criterion(logps, y.squeeze().long())
 
             # backward
