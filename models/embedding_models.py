@@ -12,6 +12,7 @@ from gensim.models.keyedvectors import load_word2vec_format
 from utils.embedding import pretrained_embedding_file_path, embedding_file_path
 from utils import utils
 from utils import embedding
+from utils.utils import set_seed
 
 
 def get_pretrained_rep_model():
@@ -58,6 +59,7 @@ def produce_representation_vector_per_word(word: str, glove, representation_mode
 
 
 def produce_representation_vectors(dataset):
+    set_seed()
     representation = []
     glove = get_pretrained_rep_model()
     representation_model = KeyedVectors.load(pretrained_embedding_file_path)

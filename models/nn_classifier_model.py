@@ -21,6 +21,7 @@ class TrainDevDataset(Dataset):
         return self.rep[idx], self.labels[idx]
 
 def evaluate(model, dev_loader):
+    set_seed()
     y_pred_list = []
     for i, x_y in tqdm(enumerate(dev_loader)):
         x, y = x_y
@@ -37,6 +38,7 @@ def get_data_set_loader(data):
 
 
 def train_evaluate_nn_model(m2_nn, train_loader, dev_loader, dev_dataset, train_dataset):
+    set_seed()
     optimizer = get_m2_optimizer(m2_nn.parameters())
     best_f1 = 0.0
 

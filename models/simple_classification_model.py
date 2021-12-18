@@ -33,6 +33,7 @@ def train_simple_model(train_data):
 
 
 def evaluate_simple_model(dev_data, svm_model) -> float:
+    set_seed()
     ### Evaluation ###
 
     # Representing the words from dev data set:
@@ -40,7 +41,7 @@ def evaluate_simple_model(dev_data, svm_model) -> float:
     # dev_rep: type: np.ndarray, shape: (16261, 200). 16261 is the # words in dev data
     # dev_labels: type: np.ndarray, shape: (16261,).
     print(
-        f"Produced representation for the words in the dev data set. {dev_rep.shape[0]} words with vector len {dev_rep.shape[1]}\n")
+        f"Produced representation for the words in the dev data set. {dev_rep.shape[0]} words with vector len {dev_rep.shape[1]}")
 
     # Inference:
     print(f"Starting inference on dev data set (on {datetime.now().time()})")
@@ -64,6 +65,7 @@ def load_simple_model():
 
 
 def simple_model(train_data, dev_data) -> (svm._classes.SVC, float):
+    set_seed()
     train_simple_model(train_data)
     svm_model = load_simple_model()
     m_1_f1_score = evaluate_simple_model(dev_data, svm_model)
