@@ -1,11 +1,13 @@
 from copy import copy
+from gensim.models.keyedvectors import load_word2vec_format
 from sklearn import svm
 from datetime import datetime
 
 from utils.utils import files_paths
 from utils.nn_classifier import m2_nn, m2_file_path
 from utils.simple_classifier import m1_file_path
-from embedding_models import produce_representation_vector_per_word
+from utils.embedding import embedding_file_path
+from models.embedding_models import produce_representation_vector_per_word,get_pretrained_rep_model
 
 import pickle
 import torch
@@ -35,6 +37,8 @@ def generate_files(model_object, model_name):
         # TODO IF THERE ARE MORE PREPROCESS, IT SHOULD BE DONE HERE ALSO!!!
 
         # Get representation vector
+        glove = get_pretrained_rep_model()
+        representation_model = load_word2vec_format(embedding_file_path)
         vec = produce_representation_vector_per_word(word, glove, representation_model)
 
         # Run Inference

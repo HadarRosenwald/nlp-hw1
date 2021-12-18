@@ -23,6 +23,7 @@ def train_representation_model(train_data, dev_data, test_data) -> word2vec.Word
     model = Word2Vec(sentences=training_data, vector_size=embedding.vector_size, window=embedding.window_size,
                      min_count=embedding.min_count, workers=embedding.num_workers)
     model.train(training_data, total_examples=len(training_data), epochs=embedding.num_epochs)
+    model.save(embedding.embedding_file_path)
     return model
 
 
@@ -37,7 +38,7 @@ def produce_representation_vector_per_word(word: str, glove: keyedvectors.KeyedV
     else:
         if in_pretrained and in_trained:
             # word exists in both, will use weighted averaged embedding vector
-            vec = pretrained_weight * glove[word] + (1-pretrained_weight) * representation_model.wv.get_vector(word, norm=True)
+            vec = embedding.pretrained_weight * glove[word] + (1-embedding.pretrained_weight) * representation_model.wv.get_vector(word, norm=True)
         elif in_pretrained:
             # word exists only in pretrained embedding model
             vec = glove[word]
