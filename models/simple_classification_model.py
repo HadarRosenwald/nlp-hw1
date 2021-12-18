@@ -5,7 +5,7 @@ from sklearn import svm
 from sklearn.metrics import f1_score
 
 from models.embedding_models import produce_representation_vectors
-from utils.simple_classifier import m1_file_path
+from utils.simple_classifier import m1_file_path, C, kernel, class_weight
 from utils.utils import set_seed
 
 
@@ -23,7 +23,7 @@ def train_simple_model(train_data):
     # Training simple model:
     print(f"Starting model fit on training data (on {datetime.now().time()})")
 
-    svm_model = svm.SVC().fit(rep, labels)
+    svm_model = svm.SVC(C=C, kernel=kernel, class_weight=class_weight).fit(rep, labels)
     print(f"Model fitting completed (on {datetime.now().time()})")
 
     with open(m1_file_path, 'wb') as f: # TODO SHOULD WE CLOSE?
